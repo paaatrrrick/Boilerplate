@@ -1,8 +1,10 @@
-# World's Best Boilerplate 🚀
+# World's Best Full-Stack Boilerplate 🚀
 
 A full-stack boilerplate with Next.js (React), TypeScript, Node.js, Express, MongoDB, and TailwindCSS. Authentication, Navbars, Databases, Error Handling, Loading Screens, and project setup are already done.
 
 You can demo this project live here -> [View Live](https://worlds-best-boilerplate.vercel.app/)
+
+<img width="1440" alt="Screen Shot 2023-12-06 at 12 46 48 PM" src="https://github.com/paaatrrrick/Boilerplate/assets/88113528/d4bf3583-9e51-4f65-ada7-baebd19bc9dc">
 
 ### What is included?
 
