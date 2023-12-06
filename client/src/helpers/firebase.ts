@@ -12,6 +12,7 @@ interface FirebaseConfig {
     measurementId: string;
 }
 
+//TODO_UPDATE_THIS: Update the firebaseConfig to your firebase config
 const firebaseConfig : FirebaseConfig = {
     apiKey: 'AIzaSyB2FKP0oaAeLPa96h_SI7fFi4KEEaWrvxI',
     authDomain: "wordsmith-auth.firebaseapp.com",

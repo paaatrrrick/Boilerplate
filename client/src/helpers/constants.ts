@@ -25,8 +25,10 @@ interface Endpoints {
   googleSignUp: string;
 }
 
+
+//TODO_UPDATE_THIS: Update the serverUrl to your server url
 const constants : Constants = {
-  serverUrl: isLocal ? "http://localhost:4500" : "https://courser-production.up.railway.app",
+  serverUrl: isLocal ? "http://localhost:4500" : "https://boilerplate.up.railway.app",
   isLocal: isLocal,
   errorTimeout: 7500,
   routes: {

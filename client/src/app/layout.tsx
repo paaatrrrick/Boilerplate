@@ -7,7 +7,7 @@ import { LoaderProvider } from '@/context/LoaderContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '🌍 World Changing Website',
+  title: `Earth's Best Boilerplate! 🚀`,
   description: 'A site that will change the world one user at a time 🏔',
 }
 

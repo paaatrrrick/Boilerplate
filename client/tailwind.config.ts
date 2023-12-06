@@ -26,8 +26,6 @@ const config: Config = {
         '8xl': ['6rem', { lineHeight: '1' }],
         '9xl': ['8rem', { lineHeight: '1' }],
       },
-
-      //TODO: change these colors to match the new brand colors
       colors: {
         "brandColor": `var(--colors-brandColor)`,
         "brandColor-100": `var(--colors-brandColor-100)`,
@@ -44,7 +42,8 @@ const config: Config = {
     variables: {
       DEFAULT: {
         colors: {
-          brandColor: '#3962fe',
+          //TODO_UPDATE_THIS: Update these colors to your brand colors
+          'brandColor': '#3962fe',
           'brandColor-100': '#e2e8ff',
           'brandColor-200': '#b6c2ff',
           'brandColor-300': '#8a9eff',
