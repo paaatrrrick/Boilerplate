@@ -3,6 +3,7 @@ const formsPlugin = require('@tailwindcss/forms');
 const headlessuiPlugin = require('@headlessui/tailwindcss');
 const variables = require('@mertasan/tailwindcss-variables');
 
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
