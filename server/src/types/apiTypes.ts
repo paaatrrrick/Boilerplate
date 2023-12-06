@@ -1,9 +1,9 @@
 import { Request } from 'express';
-import { User } from '../types/models';
+import { UserType } from '../types/models';
 
 
 export interface RequestWithUser extends Request {
-    user?: User;
+    user?: UserType;
 }
 
 export interface FirebaseConfigTypes {

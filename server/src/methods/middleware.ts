@@ -4,8 +4,8 @@ if (process.env.NODE_ENV !== "production") {
 
 import { firebaseAdmin } from "./firebase";
 import { Request, NextFunction, Response } from 'express';
-import { User } from '../types/models';
-import MyUser from '../models/user';
+import { UserType } from '../types/models';
+import User from '../models/user';
 
 
 
@@ -23,7 +23,7 @@ const Authenticate =  async function (req: Request, res: Response, next: NextFun
       return res.status(401).send({error: "Sorry you are not authorized to access this"});
     }
 
-    const user : User = await MyUser.findOne({firebaseId: firebaseUser.user_id});
+    const user : UserType = await User.findOne({firebaseId: firebaseUser.user_id});
     if (!user) {
       // Unauthorized
       return res.status(401).send({error: "Sorry you are not authorized to access this"});

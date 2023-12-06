@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import { User } from '../types/models';
+import { UserType } from '../types/models';
 
 const Schema = mongoose.Schema;
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema<UserType>({
     email: { type: String, optional: false },
     dateCreate: { type: Date, default: Date.now },
     name: { type: String, optional: false },
@@ -10,4 +10,4 @@ const UserSchema = new Schema<User>({
     firebaseUID: { type: String, optional: false },
 });
 
-export default mongoose.model('MyUser', UserSchema);
+export default mongoose.model('User', UserSchema);
