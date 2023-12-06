@@ -70,8 +70,8 @@ function MobileNavigation({isAuthenticated}: {isAuthenticated: boolean}) {
             as="div"
             className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
-            {pages.map((page) => (
-              <Popover.Button as={Link} href={page.href} className="block w-full p-2">{page.name}</Popover.Button>
+            {pages.map((page, index) => (
+              <Popover.Button as={Link} href={page.href} key={index} className="block w-full p-2">{page.name}</Popover.Button>
             ))}
             <hr className="m-2 border-slate-300/40" />
             {isAuthenticated && <Popover.Button as={Link} href="" onClick={() => {signOut(fireBaseAuth)}}>Logout</Popover.Button>}
@@ -122,8 +122,8 @@ export function Header() {
               />
             </Link>
             <div className="hidden md:flex md:gap-x-6">
-              {pages.map((page) => (
-                <Link href={page.href} className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+              {pages.map((page, index) => (
+                <Link href={page.href} key={index} className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                   {page.name}
                 </Link>
               ))}

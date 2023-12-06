@@ -29,7 +29,7 @@ function Navbar({profilePicture} : NavbarTypes) {
             <Image className="h-8 w-auto" src={logo} alt="" />
           </a>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
+            {navigation.map((item, index) => (
               <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
                 {item.name}
               </a>
