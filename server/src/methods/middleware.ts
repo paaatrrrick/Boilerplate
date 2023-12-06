@@ -23,7 +23,7 @@ const Authenticate =  async function (req: Request, res: Response, next: NextFun
       return res.status(401).send({error: "Sorry you are not authorized to access this"});
     }
 
-    const user : UserType = await User.findOne({firebaseId: firebaseUser.user_id});
+    const user : UserType = await User.findOne({firebaseUID: firebaseUser.user_id});
     if (!user) {
       // Unauthorized
       return res.status(401).send({error: "Sorry you are not authorized to access this"});
