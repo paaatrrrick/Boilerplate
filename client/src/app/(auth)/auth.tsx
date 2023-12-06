@@ -10,8 +10,6 @@ const Auth = ({isLogin}: AuthProps) => {
     const screen = isLogin ? 'Log in' : 'Sign up';
     const switchAuthScreen = !isLogin ? 'I have an account' : "I don't have an acccount";
     const hrefLink = !isLogin ? '/login' : '/signup';
-
-
     const [email, setEmail] = useState<string>('');
     const [showPassword, setShowPassword] = useState<Boolean>(false);
     const [password, setPassword] = useState<string>('');
@@ -36,27 +34,27 @@ const Auth = ({isLogin}: AuthProps) => {
         if (response.ok) {
             LogInWithEmail(setError, email, password)
         } else {
-            setError('Error signing up');
+            const data = await response.json();
+            const errorMessage = data?.message || 'Error signing up';
+            setError(errorMessage);
         }
     }
 
     const handleSignup = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email === '' || password === '' || (!isLogin && name === '')) {
-            setError('Please fill out all fields');
-            return;
+            setError('Please fill out all fields.');
         } else if (!emailRegex.test(email)) {
-            setError('Please enter a valid email');
-            return;
+            setError('Please enter a valid email.');
         } else if (password.length < 6) {
-            setError('Password must be at least 6 characters');
-            return;
+            setError('Password must be at least 6 characters.');
         } else if (isLogin) {
             LogInWithEmail(setError, email, password);
         } else {
             SignUpWithEmail();
         }
     }
+
     return (
         <div className="flex flex-col items-center justify-between h-screen w-screen bg-offwhite">
         <div className="bg-white rounded-lg shadow-md max-w-md min-w-[320px] p-8 w-full mt-24">
@@ -64,40 +62,57 @@ const Auth = ({isLogin}: AuthProps) => {
                 <h1 className="text-2xl font-medium text-black">{screen}</h1>
                 <a href={hrefLink} className="font-normal text-sm text-primary3 text-brandColor-500 underline">{switchAuthScreen}</a>
             </div>
-            <form className="flex flex-col items-center justify-between w-full">
-            <input
-                type="email"
-                id="email"
-                placeholder='Email'
-                className="w-full border border-gray-500 rounded-md focus:border-brandColor focus:ring-0 flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
-                value={email}
-                onClick={() => setShowPassword(true)}
-                onChange={(event: any) => setEmail(event.target.value)}
-            />
-            {showPassword &&
+            <form 
+                className="flex flex-col items-center justify-between w-full"
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSignup();
+                }}
+                >
                 <input
+                    type="email"
+                    id="email"
+                    placeholder='Email'
+                    className="w-full border border-gray-500 rounded-md focus:border-brandColor focus:ring-0 flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
+                    value={email}
+                    onClick={() => setShowPassword(true)}
+                    onChange={(event) => setEmail(event.target.value)}
+                />
+                {showPassword && (
+                    <input
                     type="password"
                     id="password"
                     placeholder='Password'
                     className="w-full border border-gray-500 focus:border-brandColor focus:ring-0 rounded-md flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
                     value={password}
-                    onChange={event => setPassword(event.target.value)}
-                />
-            }
-            {(showPassword && !isLogin) &&
-                <input
+                    onChange={(event) => setPassword(event.target.value)}
+                    onKeyPress={(event) => {
+                        if (event.key === 'Enter') handleSignup();
+                    }}
+                    />
+                )}
+                {showPassword && !isLogin && (
+                    <input
                     type="text"
                     id="name"
                     placeholder='Name'
                     className="w-full border border-gray-500 rounded-md focus:border-brandColor focus:ring-0 flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
                     value={name}
-                    onChange={event => setName(event.target.value)}
-                />
-            }
-            </form>
-            {error !== '' && <p className='text-red-600 text-sm font-light mt-2 mb-1'>{error}</p>}
+                    onChange={(event) => setName(event.target.value)}
+                    onKeyPress={(event) => {
+                        if (event.key === 'Enter') handleSignup();
+                    }}
+                    />
+                )}
+                {error !== '' && <p className='text-red-600 text-sm font-light mt-2 mb-1'>{error}</p>}
+                <button 
+                    type="submit"
+                    className='w-full mt-4 font-normal text-sm h-12 bg-brandColor-600 text-white rounded-md'
+                >
+                    {capitalizeFirstLetter(screen)}
+                </button>
+                </form>
 
-            <button onClick={handleSignup} className='w-full mt-4 font-normal text-sm h-12 bg-brandColor-600 text-white rounded-md'>{capitalizeFirstLetter(screen)}</button>
 
             <button className="border border-gray-500 rounded-md h-12 px-3 w-full flex items-center justify-start text-gray-500 bg-white text-base font-light mt-4 hover:bg-blue-100 cursor-pointer" onClick={() => {SignUpWithGooglePopUp(setError, isLogin)}}>
                 {/* Google icon here */}
