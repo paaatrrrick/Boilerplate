@@ -7,23 +7,24 @@ import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
 import mongoose from 'mongoose';
 import AuthRouter from './routes/auth';
+import ProfileRouter from './routes/profile';
 
 
 export default class Api {
     private port: number;
     private dbUrl: string;
-    constructor(port: number, dbUrl: string) {
+    private clientUrl: string;
+    constructor(port: number, dbUrl: string, clientUrl: string) {
         this.port = port;
         this.dbUrl = dbUrl;
+        this.clientUrl = clientUrl;
     }
-
-    authRoutes = (): express.Router => AuthRouter;
-
-    // githubRouter.post('/connect', isLoggedIn, catchAsync(async (req: Request, res: ResponseWithUser, next: NextFunction) => {
 
 
     error(): ErrorRequestHandler {
         return (err: Error, req: Request, res: Response, next: NextFunction) => {
+            console.log('---at error handler---');
+            //Hit up Splunk or some other logging service here 💥
             console.error(err);
             res.status(500).send({ error: err.message });
         }
@@ -44,12 +45,12 @@ export default class Api {
             console.log("🍌 Mongo connection successful");
         });
 
-
         const app = express();
         app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }))
-        app.use(cors());
+        app.use(cors({credentials: true, origin: this.clientUrl}));
         app.use(cookieParser());
-        app.use(`/auth`, this.authRoutes());
+        app.use(`/auth`, AuthRouter);
+        app.use(`/profile`, ProfileRouter);
         app.use(this.error());
 
         let PORT: number | string = process.env.PORT;

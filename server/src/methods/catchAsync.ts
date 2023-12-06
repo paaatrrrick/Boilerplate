@@ -1,8 +1,8 @@
-import { Request, NextFunction } from 'express';
-import { ResponseWithUser } from '../types/apiTypes';
+import { NextFunction, Response } from 'express';
+import { RequestWithUser } from '../types/apiTypes';
 
 const catchAsync = func => {
-    return (req: Request, res: ResponseWithUser, next: NextFunction) => {
+    return (req: RequestWithUser, res: Response, next: NextFunction) => {
         func(req, res, next).catch(next);
     }
 }

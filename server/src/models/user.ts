@@ -7,6 +7,7 @@ const UserSchema = new Schema<User>({
     dateCreate: { type: Date, default: Date.now },
     name: { type: String, optional: false },
     profilePicture: { type: String, optional: true },
+    firebaseUID: { type: String, optional: false },
 });
 
-export default mongoose.model('users', UserSchema);
+export default mongoose.model('MyUser', UserSchema);

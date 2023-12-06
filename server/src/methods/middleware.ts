@@ -1,42 +1,43 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-import { Request, NextFunction } from 'express';
-import { ResponseWithUser } from '../types/apiTypes';
+
+import { firebaseAdmin } from "./firebase";
+import { Request, NextFunction, Response } from 'express';
 import { User } from '../types/models';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { constants } from '../constants';
-import users from '../models/user';
+import MyUser from '../models/user';
 
 
-async function isLoggedIn(req: Request, res: ResponseWithUser, next: NextFunction) {
-    //check if req.headers
-    let token: string | string[] = req.headers[constants.authHeader];
-    if (Array.isArray(token)) {
-        token = token[0];
+
+const Authenticate =  async function (req: Request, res: Response, next: NextFunction) {
+  try {
+    const firebaseToken = req.headers.authorization?.split(" ")[1];    
+
+    let firebaseUser;
+    if (firebaseToken) {
+      firebaseUser = await firebaseAdmin.auth().verifyIdToken(firebaseToken);
     }
-    //check if token exists or is null in an if statement
-    if (!token || token === "" || token === undefined || token === null || token === "null") {
-        return res.status(401).send(JSON.stringify("no user found"));
-    } else {
-        try {
-            //@ts-ignore
-            let decoded: JwtPayload = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-            const user: User = await users.findById(decoded._id);
-            if (!user) {
-                return res.status(401).send(JSON.stringify("no user found"));
-            }
-            res.userId = decoded._id;
-            res.user = user;
-        } catch (e) {
-            return res.status(500).send(JSON.stringify("no user found"));
-        }
+    if (!firebaseUser) {
+      // Unauthorized
+      return res.status(401).send({error: "Sorry you are not authorized to access this"});
     }
+
+    const user : User = await MyUser.findOne({firebaseId: firebaseUser.user_id});
+    if (!user) {
+      // Unauthorized
+      return res.status(401).send({error: "Sorry you are not authorized to access this"});
+    }
+
+    req['user'] = user;
+
     next();
-    // res.redirect('/login');
+  } catch (err) {
+    //Unauthorized
+    return res.status(401).send({error: "Sorry you are not authorized to access this"});
+  }
 }
 
 
 
-export { isLoggedIn };
+export { Authenticate };

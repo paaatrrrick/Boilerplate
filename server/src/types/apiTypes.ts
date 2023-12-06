@@ -1,9 +1,8 @@
-import { Response } from 'express';
+import { Request } from 'express';
 import { User } from '../types/models';
 
 
-export interface ResponseWithUser extends Response {
-    userId?: string | null;
+export interface RequestWithUser extends Request {
     user?: User;
 }
 

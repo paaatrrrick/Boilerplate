@@ -3,4 +3,5 @@ export interface User {
     dateCreate: Date,
     name: string,
     profilePicture?: string,
+    firebaseUID: string,
 }
