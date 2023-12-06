@@ -1,4 +1,4 @@
-# World's Best Full-Stack Boilerplate 🚀
+# World's Best Full-Stack Boilerplate 🌍
 
 A full-stack boilerplate with Next.js (React), TypeScript, Node.js, Express, MongoDB, and TailwindCSS. Authentication, Navbars, Databases, Error Handling, Loading Screens, and project setup are already done.
 
